@@ -1,0 +1,26 @@
+{
+  "name": "sygnomi/scryptos-api",
+  "description": "API Class for SCRYPTOS (app.scryptos.com)",
+  "keywords": ["template", "composer", "package"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sygnomi GmbH",
+      "email": "github@sygnomi.de"
+    }
+  ],
+  "type": "library",
+  "require": {
+    "php": ">=7.0",
+    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/psr7": "^1.4",
+    "guzzlehttp/promises": "^1.3"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "^7"
+  },
+  "autoload": {
+    "classmap": ["src/"]
+  }
+}
