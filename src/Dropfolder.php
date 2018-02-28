@@ -63,10 +63,10 @@ class Dropfolder
      */
     public function __construct(array $connectionData)
     {
-        $this->domain = $connectionData['domain'] ?: 'https://scryptos.com';
+        $this->domain = isset($connectionData['domain']) ?: 'https://scryptos.com';
         $this->client = $connectionData['client'];
         $this->group = $connectionData['group'];
-        $this->form_data = $connectionData['form_data'] ?: [];
+        $this->form_data = isset($connectionData['form_data']) ?: [];
         $this->password = $connectionData['password'];
         $folder_link = $this->client . '/' . $this->group . '/';
         $this->urls['login'] = $this->domain . '/dropfolder/' . $folder_link;
