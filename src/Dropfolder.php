@@ -63,7 +63,7 @@ class Dropfolder
      */
     public function __construct(array $connectionData)
     {
-        $this->domain = isset($connectionData['domain']) ? $connectionData['domain'] : 'https://scryptos.com';
+        $this->domain = isset($connectionData['domain']) ? $connectionData['domain'] : 'https://app.scryptos.com';
         $this->client = $connectionData['client'];
         $this->group = $connectionData['group'];
         $this->form_data = isset($connectionData['form_data']) ? $connectionData['form_data'] : [];
@@ -132,14 +132,23 @@ class Dropfolder
 
         /* Upload files using name and local path */
         foreach ($files as $file) {
-            if (!file_exists($file['filehandler'])) {
+            if (isset($file['file_path']) && !file_exists($file['file_path'])) {
                 $this->upload_errors[] = [
                     'file_name' => $file['name'],
                     'request_status_code' => 0,
-                    'request_return' => $file['filehandler'] . ' -> Source file not found!'
+                    'request_return' => $file['file_path'] . ' -> Source file not found!'
                 ];
                 continue;
             }
+            if (isset($file['file_stream']) && empty($file['file_stream'])) {
+                $this->upload_errors[] = [
+                    'file_name' => $file['name'],
+                    'request_status_code' => 0,
+                    'request_return' => $file['file_stream'] . ' -> Stream is empty!'
+                ];
+                continue;
+            }
+            $file_content = isset($file['file_path']) ? fopen($file['file_path'], 'r') : $file['file_stream'];
             $response = $client->request('POST', $this->urls['upload'], [
                 'multipart' => [
                     [
@@ -148,7 +157,7 @@ class Dropfolder
                     ],
                     [
                         'name' => 'file',
-                        'contents' => fopen($file['filehandler'], 'r'),
+                        'contents' => $file_content,
                         'filename' => $file['name']
                     ],
                     [

@@ -1,3 +1,8 @@
+[![Latest Stable Version](https://poser.pugx.org/sygnomi/scryptos-api/v/stable)](https://packagist.org/packages/sygnomi/scryptos-api)
+[![Latest Unstable Version](https://poser.pugx.org/sygnomi/scryptos-api/v/unstable)](https://packagist.org/packages/sygnomi/scryptos-api)
+[![License](https://poser.pugx.org/sygnomi/scryptos-api/license)](https://packagist.org/packages/sygnomi/scryptos-api)
+[![composer.lock](https://poser.pugx.org/sygnomi/scryptos-api/composerlock)](https://packagist.org/packages/sygnomi/scryptos-api)
+
 # SCRYPTOS API Library
 
 Using the SCRYPTOS API class you can connect to your SCRYPTOS account and integrate it into your application.
@@ -28,7 +33,8 @@ Upload files into the Sharefolder
     $dropfolder->upload([
                             [
                                 'name' => 'yourfilename.txt',
-                                'filehandler' => './local/path/To/File.txt'
+                                'file_path' => './local/path/To/File.txt'
+                                'file_stream' => stream // Optionally you can send a file stream instead of file path
                             ]
                         ]);
 
