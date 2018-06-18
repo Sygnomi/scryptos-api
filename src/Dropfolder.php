@@ -72,7 +72,7 @@ class Dropfolder
         $this->urls['login'] = $this->domain . '/dropfolder/' . $folder_link;
         $this->urls['upload'] = $this->domain . '/dropfolder-plupload/' . $folder_link;
         $this->urls['success'] = $this->domain . '/dropfolder-pluploadsuccess/' . $folder_link;
-        $this->urls['login'] = $this->domain . '/dropfolder-logout/' . $folder_link;
+        $this->urls['logout'] = $this->domain . '/dropfolder-logout/' . $folder_link;
     }
 
     /**
@@ -84,7 +84,6 @@ class Dropfolder
     {
         
         /* Convert all keys of additional form data to md5 */
-
         $form_data_md5 = array_map(
                 function ($key) {
                     return md5($key);
@@ -132,6 +131,14 @@ class Dropfolder
 
         /* Upload files using name and local path */
         foreach ($files as $file) {
+            if (!isset($file['file_path']) && !isset($file['file_stream'])) {
+                $this->upload_errors[] = [
+                    'file_name' => $file['name'],
+                    'request_status_code' => 0,
+                    'request_return' => 'No file path/stream provided!'
+                ];
+                continue;
+            }
             if (isset($file['file_path']) && !file_exists($file['file_path'])) {
                 $this->upload_errors[] = [
                     'file_name' => $file['name'],
